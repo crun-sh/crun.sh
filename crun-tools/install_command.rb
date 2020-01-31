@@ -21,8 +21,6 @@ class InstallCommand
       cat <<PROGRAM > #{prog.name}
         #{prog.launch_command([])}
       PROGRAM
-      chmod +x #{prog.name}
-      mkdir -p $HOME/.crun/apps
 
       #{install_message(prog.name, prog.version)}
     INSTALLER
@@ -34,9 +32,6 @@ class InstallCommand
         #{File.read('/data/crun.sh').gsub('\\', '\\\\').gsub('$', '\$')}
       PROGRAM
 
-      chmod +x crun
-      mkdir -p $HOME/.crun/apps
-
       #{install_message('crun', current_version)}
     INSTALLER
   end
@@ -47,6 +42,11 @@ class InstallCommand
 
   def install_message(name, version)
     <<~COMMAND
+      chmod +x #{name}
+      mkdir -p $HOME/.crun/apps
+      mkdir -p $HOME/.crun/versions
+      echo #{version} > $HOME/.crun/versions/#{name}
+
       if [[ ":$PATH:" == *":$HOME/.crun/apps:"* ]]; then
         CLI="#{name}"
         cp #{name} $HOME/.crun/apps/#{name}-#{version}

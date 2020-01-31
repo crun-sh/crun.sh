@@ -20,5 +20,5 @@ begin
   command_class_const.new.gen(params) if defined?(command_class_const)
 rescue NameError => e
   puts "echo Unknown command: '#{command}'"
-  p e
+  p "echo #{e}"
 end

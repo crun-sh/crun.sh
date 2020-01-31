@@ -51,7 +51,7 @@ if [ -n "$SHOW" ]; then
   cd "$HOME/.crun/apps/" && ls "$SHOW-"*
 fi
 
-if [[ -f ".tmp" ]]; then
+if [ -f ".tmp" ]; then
   sh .tmp
   rm .tmp
 fi
