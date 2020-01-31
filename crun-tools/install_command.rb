@@ -42,7 +42,7 @@ class InstallCommand
   end
 
   def current_version
-    File.read('/data/version').chomp
+    File.read('/data/VERSION').chomp
   end
 
   def install_message(name, version)
