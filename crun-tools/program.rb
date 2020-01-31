@@ -31,9 +31,17 @@ class Program
     @metadata ||= YAML.safe_load(raw_metadata)
   end
 
-  def launch_command(_params)
+  def requires_term?
+    metadata['require']&.is_a?(Array) &&
+      metadata['require']&.include?('terminal')
+  end
+
+  def launch_command(params)
+    term = ''
+    term = '-ti' if requires_term?
+
     <<~COMMAND
-      docker run --rm #{image}
+      docker run --rm #{term} #{image} #{params.join(' ')}
     COMMAND
   end
 

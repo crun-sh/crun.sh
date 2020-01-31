@@ -19,7 +19,7 @@ class InstallCommand
   def install_prog(prog)
     <<~INSTALLER
       cat <<PROGRAM > #{prog.name}
-        #{prog.launch_command([])}
+        #{prog.launch_command(['\\$@'])}
       PROGRAM
 
       #{install_message(prog.name, prog.version)}

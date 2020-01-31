@@ -22,6 +22,8 @@ done
 
 DRUN="docker run --rm -v $HOME/.crun:/root/.crun"
 
+shift "$((OPTIND - 1))"
+
 if [ -n "$UPDATE" ]; then
   $($DRUN crunsh/crun update $UPDATE > .tmp)
 fi
@@ -35,11 +37,11 @@ if [ -n "$REMOVE" ]; then
 fi
 
 if [ -n "$LAUNCH" ]; then
-  $($DRUN crunsh/crun launch $LAUNCH "$@" > .tmp)
+  $($DRUN crunsh/crun launch $LAUNCH > .tmp)
 fi
 
 if [ -n "$QUERY" ]; then
-  $($DRUN crunsh/crun query $QUERY "$@" > .tmp)
+  $($DRUN crunsh/crun query $QUERY > .tmp)
 fi
 
 if [ -n "$VERBOSE" ]; then
@@ -52,6 +54,6 @@ if [ -n "$SHOW" ]; then
 fi
 
 if [ -f ".tmp" ]; then
-  sh .tmp
+  sh .tmp $@
   rm .tmp
 fi
