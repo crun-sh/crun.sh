@@ -5,7 +5,7 @@ COPY crun-tools/Gemfile.lock /app/Gemfile.lock
 
 WORKDIR /app
 
-RUN bundle install
+RUN gem install bundler:1.17.2 && bundle install
 
 COPY crun-tools /app
 COPY crun.sh /data/crun.sh
