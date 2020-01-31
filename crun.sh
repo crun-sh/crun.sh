@@ -24,22 +24,22 @@ if [ $VERYVERBOSE ]; then
   set -x
 fi
 
-DRUN="docker run --rm -v $HOME/.crun:/config"
+DRUN="docker run --rm -v $HOME/.crun:/root/.crun"
 
 if [ -n "$UPDATE" ]; then
-  $($DRUN davidsiaw/crun update > .tmp)
+  $($DRUN crunsh/crun update > .tmp)
 fi
 
 if [ -n "$INSTALL" ]; then
-  $($DRUN davidsiaw/crun install $INSTALL > .tmp)
+  $($DRUN crunsh/crun install $INSTALL > .tmp)
 fi
 
 if [ -n "$REMOVE" ]; then
-  $($DRUN davidsiaw/crun remove $REMOVE > .tmp)
+  $($DRUN crunsh/crun remove $REMOVE > .tmp)
 fi
 
 if [ -n "$LAUNCH" ]; then
-  $($DRUN davidsiaw/crun launch $LAUNCH "$@" > .tmp)
+  $($DRUN crunsh/crun launch $LAUNCH "$@" > .tmp)
 fi
 
 if [ -n "$VERBOSE" ]; then

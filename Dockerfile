@@ -8,6 +8,8 @@ WORKDIR /app
 RUN bundle install
 
 COPY crun-tools /app
+COPY crun.sh /data/crun.sh
+COPY VERSION /data/VERSION
 
 ENTRYPOINT ["ruby", "generate.rb"]
 CMD ["usage"]
