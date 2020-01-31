@@ -6,28 +6,24 @@ set -e
 #  echo "crun image not found, downloading"
 #fi
 
-while getopts 'uvwi:r:l:' c
+while getopts 'vwu:i:r:l:s:q:' c
 do
   case $c in
-    u) UPDATE=yes ;;
+    u) UPDATE+="$OPTARG ";;
     i) INSTALL+="$OPTARG " ;;
     r) REMOVE+="$OPTARG " ;;
     l) LAUNCH="$OPTARG" ;;
     v) VERBOSE="yes" ;;
     w) VERYVERBOSE="yes" ;;
+    s) SHOW="$OPTARG" ;;
+    q) QUERY="$OPTARG" ;;
   esac
 done
-
-# Remove all options and leave $@ with any leftover args
-shift $((OPTIND-1))
-if [ $VERYVERBOSE ]; then
-  set -x
-fi
 
 DRUN="docker run --rm -v $HOME/.crun:/root/.crun"
 
 if [ -n "$UPDATE" ]; then
-  $($DRUN crunsh/crun update > .tmp)
+  $($DRUN crunsh/crun update $UPDATE > .tmp)
 fi
 
 if [ -n "$INSTALL" ]; then
@@ -42,8 +38,17 @@ if [ -n "$LAUNCH" ]; then
   $($DRUN crunsh/crun launch $LAUNCH "$@" > .tmp)
 fi
 
+if [ -n "$QUERY" ]; then
+  $($DRUN crunsh/crun query $QUERY "$@" > .tmp)
+fi
+
 if [ -n "$VERBOSE" ]; then
   cat .tmp
+fi
+
+if [ -n "$SHOW" ]; then
+  echo "Available versions of '$SHOW':"
+  cd "$HOME/.crun/apps/" && ls "$SHOW-"*
 fi
 
 if [[ -f ".tmp" ]]; then

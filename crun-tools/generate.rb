@@ -5,6 +5,7 @@ require_relative 'install_command'
 require_relative 'launch_command'
 require_relative 'remove_command'
 require_relative 'update_command'
+require_relative 'query_command'
 
 # This program generates commands for use with crun
 

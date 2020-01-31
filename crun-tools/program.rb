@@ -12,11 +12,15 @@ class Program
   end
 
   def latest_version
-    metadata['versions'].keys.max
+    versions.max
   end
 
   def version
     latest_version
+  end
+
+  def versions
+    metadata['versions'].keys
   end
 
   def image
