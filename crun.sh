@@ -6,7 +6,16 @@ set -e
 #  echo "crun image not found, downloading"
 #fi
 
-while getopts 'vwu:i:r:l:s:q:' c
+usage()
+{
+  echo "Usage: crun [OPTIONS] [--] [input]"
+  echo "OPTIONS:"
+  echo "  -u <app> Update an app"
+  echo "  -i <app> Install an app"
+  exit 2
+}
+
+while getopts 'vwu:i:r:l:s:q:?h' c
 do
   case $c in
     u) UPDATE+="$OPTARG ";;
@@ -17,6 +26,7 @@ do
     w) VERYVERBOSE="yes" ;;
     s) SHOW="$OPTARG" ;;
     q) QUERY="$OPTARG" ;;
+    h|?) usage ;;
   esac
 done
 
